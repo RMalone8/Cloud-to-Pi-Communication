@@ -10,10 +10,17 @@
 	"observability": {
 		"enabled": true
 	},
-	"kv_namespaces": [
+	"d1_databases": [
 		{
-			"binding": "DRONE_DATA",
-			"id": "d861b22b2cfa43b5a21728fa6be3cc83"
+			"binding": "DB",
+			"database_name": "agrodrone_db",
+			"database_id": "ef7a038d-20cf-4300-8237-0317fafd2105"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "BUCKET",
+			"bucket_name": "agrodrone-bucket"
 		}
 	]
 	/**
