@@ -1,6 +1,7 @@
 {
 	"name": "cloud-to-pi",
 	"version": "0.0.0",
+	"proxy": "http://localhost:5173",
 	"private": true,
 	"scripts": {
 		"deploy": "wrangler deploy",

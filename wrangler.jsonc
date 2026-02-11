@@ -10,13 +10,6 @@
 	"observability": {
 		"enabled": true
 	},
-	"d1_databases": [
-		{
-			"binding": "DB",
-			"database_name": "agrodrone_db",
-			"database_id": "ef7a038d-20cf-4300-8237-0317fafd2105"
-		}
-	],
 	"r2_buckets": [
 		{
 			"binding": "BUCKET",
