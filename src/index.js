@@ -43,9 +43,19 @@ export default {
         if (url.pathname === "/telemetry") {
             if (request.method === "POST") {
                 const telemetry = await request.json();
+                await storage.telemetryUpload(env, "1001", telemetry);
                 return new Response("Status Updated", {headers: corsHeaders });
             }
-            return new Response(telemetry || "{}", {headers: corsHeaders });
+
+            const telemetry = await storage.telemetryRetrieval(env, "1001");
+
+            if (!telemetry)
+                return new Response(JSON.stringify({ error: "Telemetry not found" }), {
+                    status: 404,
+                    headers: corsHeaders
+                });
+
+            return new Response(JSON.stringify(telemetry) || "{}", {headers: corsHeaders });
         }
 
         // MOSAICS (Pi POSTs data, Web App GETs data)
