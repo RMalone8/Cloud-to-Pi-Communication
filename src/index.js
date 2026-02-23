@@ -61,19 +61,19 @@ export default {
         // MOSAICS (Pi POSTs data, Web App GETs data)
         if (url.pathname === "/mosaic") {
             if (request.method === "POST") {
-                const data = await request.json();
+                const data = await request.formData();
+                const image_file = data.get("mosaic");
                 try {
-                    await storage.mosaicUpload(env, "1001", JSON.stringify(data));
+                    await storage.mosaicUpload(env, "1001", image_file);
                     console.log("Complete!");
                 } catch (e) {
                     console.error("Mosaic Error: ", e.message);
                 }
                 
-                return new Response("Status Updated", {headers: corsHeaders });
+                return new Response("Image Updated", {headers: corsHeaders });
             }
             const data = await storage.mosaicRetrieval(env, "1001");
-            const text = await data.text();
-            return new Response(text || "{}", {headers: corsHeaders });
+            return new Response(data.body, {headers: corsHeaders });
         }
 
 
