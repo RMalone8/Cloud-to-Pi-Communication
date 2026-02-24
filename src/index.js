@@ -24,7 +24,8 @@ export default {
         }
 
         // FLIGHT PLAN (Web App POSTs them, Pi GETs them)
-        if (url.pathname === "/flightplan") {
+        if (url.pathname.startsWith("/flightplan")) {
+            // handle sending of flight plans
             if (request.method === "POST") {
                 const flightplan = await request.json();
                 
@@ -35,8 +36,18 @@ export default {
                     "Content-Type": "application/json"
                 }});
             }
-            const flightplan = await storage.flightPlanRetrieval(env, "1001");
-            return Response.json(flightplan || "[]", {headers: corsHeaders });
+
+            if (url.pathname === "/flightplan/latest") // retrieving the latest flight plan
+            {
+                const flightplan = await storage.flightPlanRetrieval(env, "1001");
+                return Response.json(flightplan || "[]", {headers: corsHeaders });
+            }
+
+            if (url.pathname === "/flightplan/all") // retrieving all the flight plans
+            {
+                const flightplans = await storage.allFlightPlanRetrieval(env, "1001");
+                return Response.json(flightplans || "[]", {headers: corsHeaders });
+            }
         }
 
         // TELEMETRY (Pi POSTs status, Web App GETs status)
