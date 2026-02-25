@@ -17,9 +17,13 @@ export default {
             });
         }
 
+        const contentLength = parseInt(request.headers.get("content-length") || "0");
+        if (request.method === "POST" && contentLength > 10 * 1024 * 1024) {
+            return new Response("Payload too large", { status: 413, headers: corsHeaders });
+        }
+
         // Basic Security Check
         if (request.headers.get("Authorization") !== `Bearer ${env.DEVICE_TOKEN}`) {;
-            console.log(request.headers.get("Authorization"));
             return new Response("Unauthorized", { status: 401, headers: corsHeaders });
         }
 
